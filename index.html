@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}
+
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+    <input type = "color" id = "picker"/>
+<script type="text/javascript">
+
+
+var myCanvas=document.getElementById("myCanvas");
+var ctx = myCanvas.getContext("2d");
+
+function draw(x,y,j){
+	if(j){
+	ctx.beginPath();
+	ctx.arc(x,y,10,0,2*Math.PI);
+	ctx.fill();
+}
+}
+
+console.log(ctx.fillStyle);
+
+function changeColor(color){
+	ctx.fillStyle=color;
+}
+document.addEventListener('keydown',function(e){
+	var word=window.event.keyCode;
+	console.log(word);
+	if(word==66){
+	changeColor("#0033cc");
+	}else if(word==82){
+	changeColor("#cc0000");
+	}else if(word==89){
+	changeColor("#ffff00");
+	}else if(word==71){
+	changeColor("#00cc00");
+	}
+})
+
+function clearCanvas(){
+	ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+}
+document.addEventListener('keydown',function(e){
+	var word2=window.event.keyCode;
+	if (word2==32) {
+		clearCanvas();
+		var picker=document.getElementById("picker");
+		picker.blur();
+	}
+})
+
+var word3;
+document.addEventListener('keydown',function(e){
+	word3=window.event.keyCode;
+})
+
+var flag=true;
+myCanvas.addEventListener(
+		'mousemove',function(e){
+			// console.log(e);
+			var xp=myCanvas.offsetLeft-myCanvas.scrollLeft+myCanvas.clientLeft;
+			var yp=myCanvas.offsetTop-myCanvas.scrollTop+myCanvas.clientTop;
+			var x=event.clientX-xp;
+			var y=event.clientY-yp;
+			console.log(word3);
+			if(word3==38){
+				flag=false;				
+			}
+			if(word3==40){
+					flag=true;
+				}	
+			draw(x,y,flag);
+	})
+
+var color=document.getElementById("picker");
+document.addEventListener('change',function(e){
+	changeColor(color.value);
+	// console.log(color.value);
+})
+
+myCanvas.width=window.innerWidth*0.8;
+myCanvas.height=window.innerHeight*0.8;
+
+</script>
+</body>
+</html>
